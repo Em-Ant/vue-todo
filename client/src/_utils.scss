@@ -1,0 +1,33 @@
+/* colors */
+
+$lightred: #fb6464;
+$red: #f13535;
+$lightblue: #5151ff;
+$blue: #0d33f2;
+$lightgrey: whitesmoke;
+$grey: #e0e0e0;
+
+/* extendable classes */
+
+.material-box {
+  background-color: white;
+  box-shadow: 0 2px 2px 0px rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+  border-radius: 3px;
+}
+
+.round-btn {
+  border: none;
+  border-radius: 50%;
+  color: white;
+  transition: background-color 0.2s ease-in-out;
+  font-family: monospace;
+  font-weight: bolder;
+  text-align: center;
+  cursor: pointer;
+  &.disabled,
+  &[disabled] {
+    pointer-events: none;
+    cursor: default;
+    background-color: $lightgrey;
+  }
+}

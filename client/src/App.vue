@@ -2,17 +2,9 @@
   <div class="main">
     <h3>Vue TODO List</h3>
     <ul>
-      <li v-for="item in list" :key="item._id">
-        <span>{{item.name}}</span>
-        <span
-        class="remove"
-          :class="{'disabled': item._id === '__tmp'}"
-          role="button"
-          tabindex=1
-          @click="remove(item._id)"
-          @keyup.enter="remove(item._id)"
-        />
-      </li>
+      <li
+        v-for="item in list" :key="item._id"
+        is="todo-item" v-bind="item"  @remove="remove"/>
     </ul>
     <form @submit.prevent="add({name})" >
       <input v-focus v-model.trim="name" type="text" placeholder="next todo..."
@@ -25,7 +17,11 @@
 
 <script>
 let d = true;
+import TodoItem from './components/todo-item.vue';
 export default {
+  components: {
+    'todo-item': TodoItem
+  },
   data() {
     return {
       list: [],
@@ -95,23 +91,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-@mixin round-btn {
-  border: none;
-  border-radius: 50%;
-  color: white;
-  transition: background-color 0.2s ease-in-out;
-  font-family: monospace;
-  font-weight: bolder;
-  text-align: center;
-  cursor: pointer;
-  &.disabled,
-  &[disabled] {
-    pointer-events: none;
-    cursor: default;
-    background-color: #ccc;
-  }
-}
+<style lang="scss">
+@import './utils.scss';
 .main {
   color: #444;
   font-family: sans-serif;
@@ -124,43 +105,17 @@ export default {
     list-style: none;
     padding-left: 0;
   }
-  li {
-    padding: 10px;
-    line-height: 20px;
-    border-radius: 3px;
-    border: none;
-    margin-bottom: 5px;
-    background-color: white;
-    box-shadow: 0 2px 2px 0px rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
-    .remove {
-      &::before {
-        content: '-';
-      }
-      &:hover {
-        background-color: #f13535;
-      }
-      float: right;
-      display: inline-block;
-      box-sizing: border-box;
-      width: 20px;
-      height: 20px;
-      background-color: #fb6464;
-      @include round-btn;
-    }
-  }
   form {
     max-width: 400px;
     padding: 10px;
     height: 50px;
-    background-color: white;
-    box-shadow: 0 2px 2px 0px rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
-    border-radius: 3px;
+    @extend .material-box;
     button {
       float: right;
       width: 30px;
       height: 30px;
-      background-color: #5151ff;
-      @include round-btn;
+      background-color: $lightblue;
+      @extend .round-btn;
       margin: 0;
       margin-left: 5px;
       &::before {
@@ -176,15 +131,15 @@ export default {
       height: 30px;
       padding: 5px;
       border-radius: 3px;
-      border: 1px solid #e0e0e0;
+      border: 1px solid $grey;
       max-width: 350px;
       transition: background-color 0.1s ease-in-out;
       &[disabled] {
-        background-color: #ccc;
+        background-color: $lightgrey;
         color: white;
         &::placeholder {
           opacity: 1;
-          color: #f0f0f0;
+          color: white;
         }
       }
     }

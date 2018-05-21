@@ -5,3 +5,20 @@ html,
 body {
   background-color: #f8f8f8;
 }
+
+@mixin round-btn {
+  border: none;
+  border-radius: 50%;
+  color: white;
+  transition: background-color 0.2s ease-in-out;
+  font-family: monospace;
+  font-weight: bolder;
+  text-align: center;
+  cursor: pointer;
+  &.disabled,
+  &[disabled] {
+    pointer-events: none;
+    cursor: default;
+    background-color: whitesmoke;
+  }
+}
